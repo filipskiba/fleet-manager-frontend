@@ -20,7 +20,9 @@
             <div
               v-if="submitted && errors.has('username')"
               class="alert-danger"
-            >{{errors.first('username')}}</div>
+            >
+              {{ errors.first('username') }}
+            </div>
           </div>
           <div class="form-group">
             <label for="email">Email</label>
@@ -31,10 +33,9 @@
               class="form-control"
               name="email"
             />
-            <div
-              v-if="submitted && errors.has('email')"
-              class="alert-danger"
-            >{{errors.first('email')}}</div>
+            <div v-if="submitted && errors.has('email')" class="alert-danger">
+              {{ errors.first('email') }}
+            </div>
           </div>
           <div class="form-group">
             <label for="password">Password</label>
@@ -48,7 +49,9 @@
             <div
               v-if="submitted && errors.has('password')"
               class="alert-danger"
-            >{{errors.first('password')}}</div>
+            >
+              {{ errors.first('password') }}
+            </div>
           </div>
           <div class="form-group">
             <button class="btn btn-primary btn-block">Sign Up</button>
@@ -60,7 +63,9 @@
         v-if="message"
         class="alert"
         :class="successful ? 'alert-success' : 'alert-danger'"
-      >{{message}}</div>
+      >
+        {{ message }}
+      </div>
     </div>
   </div>
 </template>
@@ -72,16 +77,16 @@ export default {
   name: 'Register',
   data() {
     return {
-      user: new User('', '', ''),
+      user: new User('', '', '', ''),
       submitted: false,
       successful: false,
-      message: ''
+      message: '',
     };
   },
   computed: {
     loggedIn() {
       return this.$store.state.auth.status.loggedIn;
-    }
+    },
   },
   mounted() {
     if (this.loggedIn) {
@@ -92,16 +97,18 @@ export default {
     handleRegister() {
       this.message = '';
       this.submitted = true;
-      this.$validator.validate().then(isValid => {
+      this.$validator.validate().then((isValid) => {
         if (isValid) {
           this.$store.dispatch('auth/register', this.user).then(
-            data => {
+            (data) => {
               this.message = data.message;
               this.successful = true;
             },
-            error => {
+            (error) => {
               this.message =
-                (error.response && error.response.data && error.response.data.message) ||
+                (error.response &&
+                  error.response.data &&
+                  error.response.data.message) ||
                 error.message ||
                 error.toString();
               this.successful = false;
@@ -109,8 +116,8 @@ export default {
           );
         }
       });
-    }
-  }
+    },
+  },
 };
 </script>
 
