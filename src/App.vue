@@ -15,7 +15,9 @@
           <router-link to="/mod" class="nav-link">Moderator Board</router-link>
         </li>
         <li class="nav-item">
-          <router-link v-if="currentUser" to="/user" class="nav-link">User</router-link>
+          <router-link v-if="currentUser" to="/user" class="nav-link"
+            >User</router-link
+          >
         </li>
       </div>
 
@@ -72,13 +74,40 @@ export default {
       }
 
       return false;
-    }
+    },
   },
   methods: {
     logOut() {
       this.$store.dispatch('auth/logout');
       this.$router.push('/login');
-    }
-  }
+    },
+    parseJwt(token) {
+      var base64Url = token.split('.')[1];
+      var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+      var jsonPayload = decodeURIComponent(
+        Buffer.from(base64, 'base64')
+          .toString('ascii')
+          .split('')
+          .map(function (c) {
+            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+          })
+          .join('')
+      );
+
+      return JSON.parse(jsonPayload);
+    },
+  },
+  // watch: {
+  //   timerCount: {
+  //     handler(value) {
+  //       if (value > 0) {
+  //         setTimeout(() => {
+  //           this.timerCount--;
+  //         }, 1000);
+  //       }
+  //     },
+  //     immediate: true, // This ensures the watcher is triggered upon creation
+  //   },
+  // },
 };
 </script>

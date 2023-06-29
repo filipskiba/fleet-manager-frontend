@@ -89,12 +89,12 @@
 
 <script>
 import User from '../models/user';
-import AuthService from '../services/auth.service';
+import UserService from '../services/user.service';
 export default {
   name: 'Profile',
   data() {
     return {
-      user: new User('', '', '', ''),
+      user: new User('', '', '', '', false),
       submitted: false,
       successful: false,
       message: '',
@@ -117,10 +117,14 @@ export default {
       this.submitted = true;
       this.$validator.validate().then((isValid) => {
         if (isValid) {
-          AuthService.updateAccount(this.user).then(
-            (response) => {
-              this.message = response.data.message;
+          UserService.updateAccount(this.user).then(
+            () => {
+              this.message = 'Użytkownik zaktualizowany';
               this.successful = true;
+              setTimeout(() => {
+                this.successful = false;
+                this.clearUser();
+              }, 2000);
             },
             (error) => {
               this.successful = false;
@@ -138,6 +142,12 @@ export default {
           );
         }
       });
+    },
+    clearUser() {
+      this.user.email = '';
+      this.user.password = '';
+      this.user.oldPassword = '';
+      this.message = '';
     },
   },
 };
