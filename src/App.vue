@@ -1,22 +1,24 @@
 <template>
   <div id="app">
     <nav class="navbar navbar-expand navbar-dark bg-dark">
-      <a href class="navbar-brand" @click.prevent>Fleet Manager</a>
+      <a href class="navbar-brand" @click.prevent>TINB system</a>
       <div class="navbar-nav mr-auto">
         <li class="nav-item">
           <router-link to="/home" class="nav-link">
-            <font-awesome-icon icon="home" />Home
+            <font-awesome-icon icon="home" />Strona domowa
           </router-link>
         </li>
-        <li v-if="showAdminBoard" class="nav-item">
-          <router-link to="/admin" class="nav-link">Admin Board</router-link>
+        <li v-if="showSuperAdminBoard" class="nav-item">
+          <router-link to="/super-admin" class="nav-link"
+            >Panel super-admin</router-link
+          >
         </li>
         <li v-if="showModeratorBoard" class="nav-item">
-          <router-link to="/mod" class="nav-link">Moderator Board</router-link>
+          <router-link to="/mod" class="nav-link">Panel moderatora</router-link>
         </li>
         <li class="nav-item">
           <router-link v-if="currentUser" to="/user" class="nav-link"
-            >User</router-link
+            >Panel użytkownika</router-link
           >
         </li>
       </div>
@@ -24,12 +26,12 @@
       <div v-if="!currentUser" class="navbar-nav ml-auto">
         <li class="nav-item">
           <router-link to="/register" class="nav-link">
-            <font-awesome-icon icon="user-plus" />Sign Up
+            <font-awesome-icon icon="user-plus" />Rejestracja
           </router-link>
         </li>
         <li class="nav-item">
           <router-link to="/login" class="nav-link">
-            <font-awesome-icon icon="sign-in-alt" />Login
+            <font-awesome-icon icon="sign-in-alt" />Logowanie
           </router-link>
         </li>
       </div>
@@ -43,7 +45,7 @@
         </li>
         <li class="nav-item">
           <a class="nav-link" href @click.prevent="logOut">
-            <font-awesome-icon icon="sign-out-alt" />LogOut
+            <font-awesome-icon icon="sign-out-alt" />Wyloguj
           </a>
         </li>
       </div>
@@ -61,9 +63,9 @@ export default {
     currentUser() {
       return this.$store.state.auth.user;
     },
-    showAdminBoard() {
+    showSuperAdminBoard() {
       if (this.currentUser && this.currentUser.roles) {
-        return this.currentUser.roles.includes('ROLE_ADMIN');
+        return this.currentUser.roles.includes('ROLE_SUPER_ADMIN');
       }
 
       return false;

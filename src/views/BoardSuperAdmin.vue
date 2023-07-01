@@ -105,6 +105,7 @@ export default {
         { key: 'username', label: 'Nazwa użytkownika' },
         { key: 'email', label: 'Email' },
         { key: 'active', label: 'Status konta' },
+        { key: 'employee', label: 'Pracownik' },
         { key: 'edit', label: 'Edycja' },
         { key: 'delete', label: 'Usuń' },
       ],

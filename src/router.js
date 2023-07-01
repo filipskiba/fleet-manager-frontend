@@ -34,10 +34,10 @@ export const router = new Router({
       component: () => import('./views/Profile.vue'),
     },
     {
-      path: '/admin',
-      name: 'admin',
+      path: '/super-admin',
+      name: 'super-admin',
       // lazy-loaded
-      component: () => import('./views/BoardAdmin.vue'),
+      component: () => import('./views/BoardSuperAdmin.vue'),
     },
     {
       path: '/mod',
